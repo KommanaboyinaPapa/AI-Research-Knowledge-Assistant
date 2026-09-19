@@ -29,7 +29,7 @@ except ImportError:
     FastAPI = None
 
 
-DATA_DIR = Path(os.getenv("RAG_DATA_DIR", Path(__file__).parent.parent / "storage"))
+DATA_DIR = Path(os.getenv("DATA_DIR", os.getenv("RAG_DATA_DIR", Path(__file__).parent.parent / "storage")))
 DOCUMENTS_FILE = DATA_DIR / "documents.json"
 embedder = EmbeddingModel()
 stores: list[VectorStore] = []

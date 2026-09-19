@@ -9,7 +9,7 @@ from pathlib import Path
 
 from .errors import RAGError
 
-USERS_FILE = Path(os.getenv("RAG_USERS_FILE", Path(os.getenv("RAG_DATA_DIR", Path(__file__).parent.parent / "storage")) / "users.json"))
+USERS_FILE = Path(os.getenv("RAG_USERS_FILE", Path(os.getenv("DATA_DIR", os.getenv("RAG_DATA_DIR", Path(__file__).parent.parent / "storage"))) / "users.json"))
 ITERATIONS = 310_000
 
 

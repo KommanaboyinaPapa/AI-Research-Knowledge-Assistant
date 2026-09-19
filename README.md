@@ -164,8 +164,9 @@ Copy `.env.example` to `.env` for local development. Important variables are:
 - `GEMINI_API_KEY` - optional locally, required for live Gemini generation
 - `JWT_SECRET` - use a random secret of at least 32 characters in production
 - `JWT_EXPIRY_MINUTES` - JWT lifetime
-- `RAG_DATA_DIR` - document, index, and metadata storage directory
-- `RAG_USERS_FILE` - persistent user JSON path
+- `DATA_DIR` - document, index, and metadata storage directory; use `/tmp/data` on Render Free
+- `RAG_DATA_DIR` - legacy-compatible fallback when `DATA_DIR` is unset
+- `RAG_USERS_FILE` - persistent user JSON path; use `/tmp/data/users.json` on Render Free
 - `CORS_ALLOWED_ORIGINS` - comma-separated exact frontend origins
 
 `.env`, frontend environment files, storage, build output, and secrets are ignored by Git. Never put an API key in source code or `VITE_*` variables unless it is intentionally public; `GEMINI_API_KEY` belongs only on the backend.
@@ -180,7 +181,7 @@ Copy `.env.example` to `.env` for local development. Important variables are:
 4. Set `APP_ENV=production`, `JWT_SECRET`, `GEMINI_API_KEY`, and `CORS_ALLOWED_ORIGINS` in Render environment settings.
 5. Set the health check path to `/api/health`.
 
-The included `render.yaml` describes the same service and an optional Render persistent disk. Do not deploy from this README automatically.
+The included `render.yaml` describes the same service without a Render Disk. Render Free uses `/tmp/data`, so local persistence is ephemeral. Do not deploy from this README automatically.
 
 ### Vercel frontend
 
@@ -191,7 +192,7 @@ The included `render.yaml` describes the same service and an optional Render per
 
 ## Storage Limitations
 
-The current implementation uses local JSON files and FAISS files. A cloud instance without a persistent disk has ephemeral storage, so documents, user records, and indexes can disappear after a restart or redeploy. `render.yaml` includes a persistent disk configuration, but persistence only exists when that disk is actually enabled for the service. No managed database, object storage, shared vector service, or multi-instance coordination is configured. Multiple backend instances should not be used with local storage unless shared durable storage and indexing coordination are added.
+The current implementation uses local JSON files and FAISS files. Render Free stores them under `/tmp/data`, which is ephemeral, so documents, user records, and indexes can disappear after a restart or redeploy. No managed database, object storage, persistent Render Disk, shared vector service, or multi-instance coordination is configured. Multiple backend instances should not be used with local storage unless shared durable storage and indexing coordination are added.
 
 ## Security Considerations
 

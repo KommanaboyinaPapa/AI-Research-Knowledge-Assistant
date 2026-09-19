@@ -14,8 +14,9 @@ Set these in the backend service environment. Never put secret values in source 
 - `JWT_SECRET`: a randomly generated secret with at least 32 characters
 - `GEMINI_API_KEY`: the Google Gemini API key used for answer generation
 - `CORS_ALLOWED_ORIGINS`: one or more exact frontend origins, comma-separated
-- `RAG_DATA_DIR=/var/data/storage` when using the persistent Render disk
-- `RAG_USERS_FILE=/var/data/storage/users.json` when using the persistent Render disk
+- `DATA_DIR=/tmp/data` for the current Render Free deployment
+- `RAG_USERS_FILE=/tmp/data/users.json` for the current Render Free deployment
+- `RAG_DATA_DIR`: legacy-compatible fallback for local configurations that still use the previous variable name
 - `JWT_EXPIRY_MINUTES`: optional token lifetime in minutes; the application default is 60
 - `PORT`: supplied by Render; do not hardcode it in the start command
 
@@ -30,7 +31,7 @@ Create a Render Web Service from the GitHub repository with:
 - Start command: `uvicorn backend.api:app --host 0.0.0.0 --port $PORT`
 - Health check path: `/api/health`
 
-The root `render.yaml` contains these settings and configures a 1 GB persistent disk mounted at `/var/data`. Set the secret and frontend-origin values in Render's environment settings rather than in YAML.
+The root `render.yaml` contains these settings and does not configure a Render Disk. Render Free uses the writable ephemeral directory `/tmp/data`; uploaded documents, users, and indexes can disappear after restart or redeploy. Set the secret and frontend-origin values in Render's environment settings rather than in YAML.
 
 ## CORS
 
@@ -38,7 +39,7 @@ Set `CORS_ALLOWED_ORIGINS` to the deployed frontend origin, for example `https:/
 
 ## FAISS and local storage
 
-The application intentionally preserves its existing local persistence behavior: uploaded files, `documents.json`, user records, embeddings, metadata, and FAISS indexes are stored under `RAG_DATA_DIR` and reloaded on startup. Render's local filesystem is ephemeral unless a persistent disk is attached and mounted. Without the disk, uploads and indexes can disappear after restart or redeploy. The current design is not configured for multiple backend instances or managed shared storage.
+The application intentionally preserves its existing local persistence behavior: uploaded files, `documents.json`, user records, embeddings, metadata, and FAISS indexes are stored under `DATA_DIR` and reloaded on startup. `RAG_DATA_DIR` remains a legacy-compatible fallback when `DATA_DIR` is unset. Render Free uses `/tmp/data`, which is ephemeral, so uploads and indexes can disappear after restart or redeploy. The current design is not configured for multiple backend instances or managed shared storage.
 
 ## Security precautions
 
