@@ -1,0 +1,17 @@
+Artificial intelligence, or AI, is the study of computer systems that can perform tasks that usually require human intelligence. These tasks include understanding language, recognizing images, and making decisions.
+
+Machine learning is a part of artificial intelligence. It allows computers to learn patterns from examples instead of following only fixed rules. A model can improve when it receives more useful training data.
+
+Deep learning is a type of machine learning that uses neural networks with many layers. These layers help a computer learn complex patterns in data, such as speech sounds or objects in photographs.
+
+Natural language processing, or NLP, helps computers work with human language. NLP is used for translation, search, chatbots, sentiment analysis, and tools that summarize documents.
+
+Computer vision helps computers understand images and videos. A computer vision system can identify objects, read text in a photograph, or help a vehicle notice other cars and people.
+
+Python is a popular programming language for AI and data science. Its simple syntax and large collection of libraries make it useful for experiments, data analysis, and building machine learning programs.
+
+Data science combines programming, statistics, and subject knowledge to learn from data. A data scientist may collect data, clean it, find trends, and explain the results with charts or reports.
+
+Good data is important for machine learning projects. Data should be relevant, accurate, and varied enough to represent the problem. Cleaning data can remove errors and make model results more reliable.
+
+A retrieval-augmented generation project, often called RAG, finds relevant text before producing an answer. Breaking documents into small chunks makes it easier to search a large collection efficiently.

@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: ai-research-knowledge-assistant-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.api:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: RAG_DATA_DIR
+        value: /var/data/storage
+      - key: RAG_USERS_FILE
+        value: /var/data/storage/users.json
+      - key: JWT_SECRET
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+    disk:
+      name: rag-storage
+      mountPath: /var/data
+      sizeGB: 1

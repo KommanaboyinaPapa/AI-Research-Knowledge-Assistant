@@ -1,0 +1,11 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+.env
+node_modules/
+*.faiss
+storage/
+frontend/node_modules/
+frontend/dist/
+*.tsbuildinfo
